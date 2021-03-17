@@ -12,19 +12,6 @@ namespace VierGewinnt
 {
     public partial class Form1 : Form
     {
-        public enum Spieler
-        {
-            Spieler1 = 0,
-            Spieler2 = 0
-        }
-
-        public enum Feld
-        {
-            NichtBelegt = 0,
-            BelegtSpieler1 = 1,
-            BelegtSpieler2 = 2
-        }
-
         /// <summary>
         /// Das ist der Spieler, der akuell am Zug ist
         /// </summary>
@@ -57,6 +44,8 @@ namespace VierGewinnt
             Spielfeld_GUI.ColumnCount = 7;           
 
             // Jedes Feld muss ein Button haben
+
+
 
             // Beim Button-Klick wird die Logik ausgeführt (z.B. überprüfen ob gewonnen, etc.)
         }
