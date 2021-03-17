@@ -34,20 +34,63 @@ namespace VierGewinnt
         public Form1()
         {
             InitializeComponent();
+            // Größe des Fensters einstellen
+            this.Size = new Size(717, 740);
 
             // Das Spielfeld (Oberfläche) muss erstmal erstellt werden
             // 1. Die Größe des Spielfelds muss die Größe des Fenster sein
-            Spielfeld_GUI.Size = new Size(600, 500);
+            Spielfeld_GUI.Size = new Size(700, 700);
 
             // Die Anzahl der Spalten und Zeilen muss gesetzt werden
             Spielfeld_GUI.RowCount = 7;
-            Spielfeld_GUI.ColumnCount = 7;           
+            Spielfeld_GUI.ColumnCount = 7;
 
-            // Jedes Feld muss ein Button haben
+            // Damit die Selektion nicht farblich dargestellt wird
+            Spielfeld_GUI.RowsDefaultCellStyle.SelectionBackColor = System.Drawing.Color.Transparent;
 
+            // Die Header sollen nicht sichbar sein
+            Spielfeld_GUI.RowHeadersVisible = false;
+            Spielfeld_GUI.ColumnHeadersVisible = false;
 
+            // Keine Scrollbars
+            Spielfeld_GUI.ScrollBars = ScrollBars.None;
+           
+            // Für jede Zeile im Spielfeldn
+            for (int row = 0; row < 7; row++)
+            {
+                // Höhe der Zeile auf 100 setzen (gleich groß wie Spalten)
+                Spielfeld_GUI.Rows[row].Height = 100;
+
+                // Für jede Spalte in der aktuellen Zeile
+                for (int column = 0; column < 7; column++)
+                {
+                    // Jedes Feld wird durch einen Button repräsentiert
+                    DataGridViewButtonCell cellButton = new DataGridViewButtonCell();
+                    cellButton.FlatStyle = FlatStyle.Flat;
+
+                    Spielfeld_GUI[column, row] = cellButton;
+                }
+            }
 
             // Beim Button-Klick wird die Logik ausgeführt (z.B. überprüfen ob gewonnen, etc.)
+            Spielfeld_GUI.CellContentClick += Spielfeld_GUI_CellContentClick;
+
+            // Füge dem Fenster das Spielfeld hinzu
+            this.Controls.Add(Spielfeld_GUI);
+        }
+
+        private void Spielfeld_GUI_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {             
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid[e.ColumnIndex, e.RowIndex] is DataGridViewButtonCell && e.RowIndex >= 0)
+            {
+                // Ein Button wurde im Spielfeld angeklickt
+                senderGrid[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Red;
+                
+                // Beende die Selektion
+                senderGrid.ClearSelection();
+            }
         }
 
         public void UeberpruefeObGewonnen()
