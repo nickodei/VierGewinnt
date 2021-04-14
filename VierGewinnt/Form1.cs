@@ -103,8 +103,16 @@ namespace VierGewinnt
                 return;
             }
 
-            // Überprüfe ob man gewonnen hat
+
             // Optimierung: Erst nach dem 4. mal prüfen (als wenn der Spieler 4 mal gesetzt hat)
+            bool hatSchonVierMalGesetzt = UeberpfuefeObSchonVierMalGesetzt();
+            if(hatSchonVierMalGesetzt == false)
+            {
+                // Rundenwechsel (Falls man noch nicht gewonne hat)
+                Spielerwechsel();
+            }
+
+            // Überprüfe ob man gewonnen hat
             bool hatGewonnen = UeberpruefeObGewonnen();
             if(hatGewonnen == true)
             {
@@ -120,7 +128,7 @@ namespace VierGewinnt
                 {
                     // Ausgabe: Unentschieden
                     // Neustart!
-                    SpielNeustarten();
+                    // SpielNeustarten();
                 }
                 else
                 {                 
@@ -134,6 +142,13 @@ namespace VierGewinnt
                 // Rundenausgabe, Counter Gewinne
         }
 
+        /// <summary>
+        /// Macht Dominik
+        /// </summary>
+        /// <param name="zeile"></param>
+        /// <param name="spalte"></param>
+        /// <param name="angeklicktesFeld"></param>
+        /// <returns></returns>
         public bool UeberpruefeObSteinGesetztWerdenKann(int zeile, int spalte, Feld angeklicktesFeld)
         {
             // Ist es schon vergeben ?
@@ -143,6 +158,11 @@ namespace VierGewinnt
             return true;
         }
 
+        /// <summary>
+        /// Macht Konstantin
+        /// </summary>
+        /// <param name="zeile"></param>
+        /// <param name="spalte"></param>
         public void FaerbeFeldInOberflaeche(int zeile, int spalte)
         {
             // Beispielcode
@@ -156,46 +176,77 @@ namespace VierGewinnt
             }
         }
 
+        /// <summary>
+        /// Macht Konstantin
+        /// </summary>
         public void SetzeSpielersteinAufFeld()
         {
 
         }
 
+        /// <summary>
+        /// Macht Tobi
+        /// </summary>
+        /// <returns></returns>
         public bool UeberpruefeObGewonnen()
         {
             // Untersuche, ob sich eine Reihe gebildet hat, die aus 4 seinen Steinen beseht (um ihn herum)
             return false;
         }
 
+        /// <summary>
+        /// Macht Lukas
+        /// </summary>
         public void Gewonnen()
         {
             // Spiel neustarten?
             // SpielNeustarten();
         }
 
+        /// <summary>
+        /// Macht Lukas
+        /// </summary>
+        /// <returns></returns>
         public bool SindAlleFelderBelegt()
         {
             return false;
         }
 
+        /// <summary>
+        /// Macht Lukas
+        /// </summary>
         public void Unentschieden()
         {
-
+            // Ausgabe Unentschieden
         }
 
+        /// <summary>
+        /// Macht Dominik
+        /// </summary>
         public void Spielerwechsel()
         {
             // Wechsel des aktuellen Spielers
             // Wechsel der Farbe
         }
 
-
+        /// <summary>
+        /// Macht (Nick), wird neu vergeben, falls jemand zu wenig hat oder mehr machen will
+        /// </summary>
         public void SpielNeustarten()
         {
             // Sielneustart
             // Felder müssen alle geleert werden
             // Spieler 1 ist wieder drann
             // Oberfläche muss auch "geleert" werden => ursprüngliche Stand
+        }
+
+        /// <summary>
+        /// Macht Konstantin
+        /// </summary>
+        /// <returns></returns>
+        public bool UeberpfuefeObSchonVierMalGesetzt()
+        {
+            return false;
         }
     }
 }
