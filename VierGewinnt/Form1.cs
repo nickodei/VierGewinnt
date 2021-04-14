@@ -80,33 +80,122 @@ namespace VierGewinnt
         }
 
         private void Spielfeld_GUI_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {             
-            var senderGrid = (DataGridView)sender;
+        {
+            // pos_x, pos_y des Buttons
+            // Achtung: Index fängt ab 1 an zu zählen. Array-(Felder-)zugriffe fangen ab 0 an.
+            int zeile = e.RowIndex;
+            int spalte = e.ColumnIndex;
+            Feld angeklicktesFeld = Spielfeld[spalte - 1, zeile - 1];
 
-            if (senderGrid[e.ColumnIndex, e.RowIndex] is DataGridViewButtonCell && e.RowIndex >= 0)
+            // Kann ich dieses Feld überhaupt anklicken, bzw. kann mein Stein draufgelegt werden
+            bool kannGesetztWerden = UeberpruefeObSteinGesetztWerdenKann(zeile, spalte, angeklicktesFeld);
+            if(kannGesetztWerden == true)
+            {
+                // Holde das Feld aus der Spielfeld-Logik heraus und setze dann das Feld mit meinem Stein
+                SetzeSpielersteinAufFeld();
+
+                // Färbe das Feld in der Oberfläche mit meiner Farbe 
+                FaerbeFeldInOberflaeche(zeile, spalte);
+            }
+            else
+            {
+                // nichts machen oder ausgabe: Feld ungültig
+                return;
+            }
+
+            // Überprüfe ob man gewonnen hat
+            // Optimierung: Erst nach dem 4. mal prüfen (als wenn der Spieler 4 mal gesetzt hat)
+            bool hatGewonnen = UeberpruefeObGewonnen();
+            if(hatGewonnen == true)
+            {
+                // Falls zutrifft => Man hat gewonnen und ruft die Gewonnen Funktion auf 
+                Gewonnen();
+                return;
+            }
+            else
+            {
+                // Was ist wenn alle Felder belegt sind, aber kein Spieler gewonnen hat
+                bool alleFelderBelegt = SindAlleFelderBelegt();
+                if(alleFelderBelegt == true)
+                {
+                    // Ausgabe: Unentschieden
+                    // Neustart!
+                    SpielNeustarten();
+                }
+                else
+                {                 
+                    // Rundenwechsel (Falls man noch nicht gewonne hat)
+                    Spielerwechsel();
+                }
+            }
+
+            // Zusatz:
+                // Spielfeldgröße in der Oberfläche einstellbar
+                // Rundenausgabe, Counter Gewinne
+        }
+
+        public bool UeberpruefeObSteinGesetztWerdenKann(int zeile, int spalte, Feld angeklicktesFeld)
+        {
+            // Ist es schon vergeben ?
+            // Ist das Feld drunter belegt
+            // Das erste Feld in der Spalte kann nur gesetzt werden, wenn des die unterste ist (Physik)
+
+            return true;
+        }
+
+        public void FaerbeFeldInOberflaeche(int zeile, int spalte)
+        {
+            // Beispielcode
+            if (Spielfeld_GUI[spalte, zeile] is DataGridViewButtonCell && zeile >= 0)
             {
                 // Ein Button wurde im Spielfeld angeklickt
-                senderGrid[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Red;
-                
+                Spielfeld_GUI[spalte, zeile].Style.BackColor = Color.Red;
+
                 // Beende die Selektion
-                senderGrid.ClearSelection();
+                Spielfeld_GUI.ClearSelection();
             }
         }
 
-        public void UeberpruefeObGewonnen()
+        public void SetzeSpielersteinAufFeld()
         {
 
+        }
+
+        public bool UeberpruefeObGewonnen()
+        {
+            // Untersuche, ob sich eine Reihe gebildet hat, die aus 4 seinen Steinen beseht (um ihn herum)
+            return false;
         }
 
         public void Gewonnen()
         {
-            // Ausgabe, wer gewonnen hat
+            // Spiel neustarten?
+            // SpielNeustarten();
         }
+
+        public bool SindAlleFelderBelegt()
+        {
+            return false;
+        }
+
+        public void Unentschieden()
+        {
+
+        }
+
+        public void Spielerwechsel()
+        {
+            // Wechsel des aktuellen Spielers
+            // Wechsel der Farbe
+        }
+
 
         public void SpielNeustarten()
         {
-            // Hierbei müssen alle Felder im Spielfeld auf Feld.KeinSpieler gesetzt werden
-            // Achtung: Oberfläche muss auch gefärbt werden
+            // Sielneustart
+            // Felder müssen alle geleert werden
+            // Spieler 1 ist wieder drann
+            // Oberfläche muss auch "geleert" werden => ursprüngliche Stand
         }
     }
 }

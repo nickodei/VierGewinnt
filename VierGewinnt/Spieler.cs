@@ -9,6 +9,6 @@ namespace VierGewinnt
     public enum Spieler
     {
         Spieler1 = 0,
-        Spieler2 = 0
+        Spieler2 = 1
     }
 }
