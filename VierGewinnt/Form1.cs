@@ -81,6 +81,11 @@ namespace VierGewinnt
 
         private void Spielfeld_GUI_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+
+
+
+
             // pos_x, pos_y des Buttons
             // Achtung: Index fängt ab 1 an zu zählen. Array-(Felder-)zugriffe fangen ab 0 an.
             int zeile = e.RowIndex;
@@ -199,6 +204,9 @@ namespace VierGewinnt
         /// </summary>
         public void Gewonnen()
         {
+            MessageBoxButtons okButton = MessageBoxButtons.OK;
+            MessageBox.Show("Spieler 1 hat gewonnen", "Resultat", okButton);
+
             // Spiel neustarten?
             // SpielNeustarten();
         }
